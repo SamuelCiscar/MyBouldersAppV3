@@ -35,9 +35,9 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
 
 
 //        Un clic sur Valider, affiche le texte du RadioButton sélectionné dans l’EditText
-        binding.buttonTest.setOnClickListener(v ->{
+        binding.btMyBlc.setOnClickListener(v ->{
 
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, BlocsActivity.class);
 
 // Lance le workflow de changement d'écran
             startActivity(intent);
@@ -52,7 +52,8 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0,1,0, "Météo");
         menu.add(0,2,0, "Map");
-        menu.add(0,2,0, "Mes blocs");
+        menu.add(0,3,0, "Mes blocs");
+        menu.add(0,4,0, "Mon profil");
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -77,8 +78,13 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
 
             finish();
 
-        }
+        } else if (item.getItemId() == 4) {
+            Intent intent = new Intent(this, ProfilActivity.class);
 
+            startActivity(intent);
+
+            finish();
+        }
 
         return super.onOptionsItemSelected(item);
     }
