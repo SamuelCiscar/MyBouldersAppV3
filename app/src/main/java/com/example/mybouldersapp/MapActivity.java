@@ -23,7 +23,7 @@ public class MapActivity extends AppCompatActivity {
         WebView  webView = findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
         // Charge la carte HTML
-        webView.loadUrl("https://kletterspots.de/climbing.html?z=6&lat=47.98256&lon=4.96582&background=osm");
+        webView.loadUrl("https://mapcomplete.org/climbing?z=8.9&lat=6.120133864982819&lon=-75.43937156351802&layer-shops_with_climbing_shoe_repair=false&layer-shops=false&layer-toilet=false&layer-drinking_water=false&layer-guidepost=false");
 
 
     }

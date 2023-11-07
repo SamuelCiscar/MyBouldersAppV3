@@ -75,7 +75,7 @@ public class WeatherActivity extends AppCompatActivity {
         menu.add(0,1,0, "Accueil");
         menu.add(0,2,0, "Map");
         menu.add(0,3,0, "Mes blocs");
-        menu.add(0,3,0, "Mon Profil");
+        menu.add(0,4,0, "Mon Profil");
         return super.onCreateOptionsMenu(menu);
     }
 

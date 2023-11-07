@@ -3,5 +3,7 @@
     <style name="Base.Theme.MyBouldersApp" parent="Theme.Material3.DayNight">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:logo">@mipmap/logomyboulders</item> <!-- Remplacez "votre_logo" par le nom de votre fichier de logo -->
+        <item name="android:displayOptions">showHome|useLogo</item>
     </style>
 </resources>
