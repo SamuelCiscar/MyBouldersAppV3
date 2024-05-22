@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00FF00"
+        tools:context=".BlocDetailActivity">
+
+        <!-- Photo du bloc avec son nom -->
+        <ImageView
+            android:id="@+id/imgBlocDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/txtNomBlocDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:padding="8dp"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"/>
+
+        <!-- Informations du bloc -->
+        <EditText
+            android:id="@+id/edtNomBlocDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imgBlocDetail"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:hint="Nom du bloc"
+            android:enabled="false"/>
+
+        <EditText
+            android:id="@+id/edtCotationDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edtNomBlocDetail"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:hint="Cotation"
+            android:enabled="false"/>
+
+        <EditText
+            android:id="@+id/edtLocalisationDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edtCotationDetail"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:hint="Localisation"
+            android:enabled="false"/>
+
+        <EditText
+            android:id="@+id/edtCommentaireDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edtLocalisationDetail"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:hint="Commentaire"
+            android:enabled="false"/>
+
+        <VideoView
+            android:id="@+id/videoView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/btnAjouterVideo"
+            android:layout_marginTop="16dp"/>
+
+        <Button
+            android:id="@+id/btnModifier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edtCommentaireDetail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Modifier"/>
+
+        <Button
+            android:id="@+id/btnAjouterVideo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnModifier"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Ajouter une vidéo"/>
+
+    </RelativeLayout>
+</ScrollView>

@@ -1,5 +1,4 @@
 package com.example.mybouldersapp;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,29 +12,22 @@ import com.example.mybouldersapp.beans.WeatherBean;
 import com.example.mybouldersapp.databinding.ActivityWeatherBinding;
 import com.squareup.picasso.Picasso;//Activity = Controler
 public class WeatherActivity extends AppCompatActivity {
-
     //IHM
     ActivityWeatherBinding binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         //instancier
         binding = ActivityWeatherBinding.inflate(getLayoutInflater());
         //Affichage
         setContentView(binding.getRoot());
-
         //Clic sur le bouton
         binding.btLoad.setOnClickListener(v -> {
-
             //Afficher la progressBar
             binding.progressBar.setVisibility(View.VISIBLE);
             String city = binding.etCityName.getText().toString();
-
             //Création d'un Thread
             new Thread(() -> {
-
                 //Appel d'API
                 WeatherBean data;
                 try {
@@ -43,7 +35,6 @@ public class WeatherActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-
                 //Mise à jour graphique
                 runOnUiThread(() -> {
                     binding.tvDesc.setText("-");
@@ -69,7 +60,6 @@ public class WeatherActivity extends AppCompatActivity {
             }).start();
         });
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0,1,0, "Accueil");
@@ -78,37 +68,26 @@ public class WeatherActivity extends AppCompatActivity {
         menu.add(0,4,0, "Mon Profil");
         return super.onCreateOptionsMenu(menu);
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == 1){
             Intent intent = new Intent(this, SecondActivity.class);
-
             startActivity(intent);
-
             finish();
         } else if (item.getItemId() == 2) {
             Intent intent = new Intent(this, MapActivity.class);
-
             startActivity(intent);
-
             finish();
         } else if (item.getItemId() == 3) {
             Intent intent = new Intent(this, BlocsActivity.class);
-
             startActivity(intent);
-
             finish();
 
         } else if (item.getItemId() == 4) {
             Intent intent = new Intent(this, ProfilActivity.class);
-
             startActivity(intent);
-
             finish();
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 }
