@@ -159,7 +159,6 @@ public class BlocDetailActivity extends AppCompatActivity {
         edtCommentaireDetail.setEnabled(false);
     }
 
-
     // Méthode pour mettre à jour les données du bloc dans Firestore
     private void updateBlocInFirestore() {
         if (bloc.getId() == null || bloc.getId().isEmpty()) {
@@ -185,7 +184,6 @@ public class BlocDetailActivity extends AppCompatActivity {
                     }
                 });
     }
-
 
     // Méthode pour ouvrir la galerie de l'utilisateur pour sélectionner une vidéo
     private void openGallery() {
