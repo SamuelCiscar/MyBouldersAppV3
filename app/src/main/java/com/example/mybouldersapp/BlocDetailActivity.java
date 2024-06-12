@@ -17,6 +17,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mybouldersapp.beans.Bloc;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 public class BlocDetailActivity extends AppCompatActivity {
@@ -76,10 +79,11 @@ public class BlocDetailActivity extends AppCompatActivity {
     // Méthode pour afficher les détails du bloc dans l'interface utilisateur
     private void displayBlocDetails() {
         ImageView imgBlocDetail = findViewById(R.id.imgBlocDetail);
-        EditText edtNomBlocDetail = findViewById(R.id.edtNomBlocDetail);
-        EditText edtCotationDetail = findViewById(R.id.edtCotationDetail);
-        EditText edtLocalisationDetail = findViewById(R.id.edtLocalisationDetail);
-        EditText edtCommentaireDetail = findViewById(R.id.edtCommentaireDetail);
+        edtNomBlocDetail = findViewById(R.id.edtNomBlocDetail);
+        edtCotationDetail = findViewById(R.id.edtCotationDetail);
+        edtLocalisationDetail = findViewById(R.id.edtLocalisationDetail);
+        edtCommentaireDetail = findViewById(R.id.edtCommentaireDetail);
+        VideoView videoView = findViewById(R.id.videoView);
 
         // Afficher les détails du bloc
         Picasso.get().load(bloc.getPhotoUrl()).into(imgBlocDetail);
@@ -87,21 +91,15 @@ public class BlocDetailActivity extends AppCompatActivity {
         edtCotationDetail.setText(bloc.getCotation());
         edtLocalisationDetail.setText(bloc.getLocalisation());
         edtCommentaireDetail.setText(bloc.getCommentaire());
+        if (bloc.getVideoUrl() != null && !bloc.getVideoUrl().isEmpty()) {
+            videoView.setVideoURI(Uri.parse(bloc.getVideoUrl()));
+            videoView.start();
+        }
     }
 
     // Méthode pour activer le mode d'édition des champs de texte
     private void enableEditing() {
         // Rendre les EditTexts éditables
-        edtNomBlocDetail = findViewById(R.id.edtNomBlocDetail);
-        edtCotationDetail = findViewById(R.id.edtCotationDetail);
-        edtLocalisationDetail = findViewById(R.id.edtLocalisationDetail);
-        edtCommentaireDetail = findViewById(R.id.edtCommentaireDetail);
-
-        edtNomBlocDetail.setText(bloc.getNom());
-        edtCotationDetail.setText(bloc.getCotation());
-        edtLocalisationDetail.setText(bloc.getLocalisation());
-        edtCommentaireDetail.setText(bloc.getCommentaire());
-
         edtNomBlocDetail.setEnabled(true);
         edtCotationDetail.setEnabled(true);
         edtLocalisationDetail.setEnabled(true);
@@ -126,6 +124,12 @@ public class BlocDetailActivity extends AppCompatActivity {
         String localisation = edtLocalisationDetail.getText().toString().trim();
         String commentaire = edtCommentaireDetail.getText().toString().trim();
 
+        // Validation des champs
+        if (nomBloc.isEmpty() || cotation.isEmpty() || localisation.isEmpty() || commentaire.isEmpty()) {
+            Toast.makeText(this, "Tous les champs doivent être remplis", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         // Mettre à jour les données du bloc
         bloc.setNom(nomBloc);
         bloc.setCotation(cotation);
@@ -134,6 +138,9 @@ public class BlocDetailActivity extends AppCompatActivity {
 
         // Afficher les détails mis à jour dans l'interface utilisateur
         displayBlocDetails();
+
+        // Enregistrer les modifications dans Firestore
+        updateBlocInFirestore();
 
         // Désactiver le mode d'édition et changer le texte du bouton en "Modifier"
         Button btnModifier = findViewById(R.id.btnModifier);
@@ -151,6 +158,34 @@ public class BlocDetailActivity extends AppCompatActivity {
         edtLocalisationDetail.setEnabled(false);
         edtCommentaireDetail.setEnabled(false);
     }
+
+
+    // Méthode pour mettre à jour les données du bloc dans Firestore
+    private void updateBlocInFirestore() {
+        if (bloc.getId() == null || bloc.getId().isEmpty()) {
+            Log.e(TAG, "Bloc ID is null or empty");
+            return;
+        }
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("blocs").document(bloc.getId())
+                .set(bloc)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(BlocDetailActivity.this, "Bloc mis à jour", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "Bloc successfully updated");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(BlocDetailActivity.this, "Erreur lors de la mise à jour", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "Erreur lors de la mise à jour du bloc", e);
+                    }
+                });
+    }
+
 
     // Méthode pour ouvrir la galerie de l'utilisateur pour sélectionner une vidéo
     private void openGallery() {
@@ -177,6 +212,10 @@ public class BlocDetailActivity extends AppCompatActivity {
                 VideoView videoView = findViewById(R.id.videoView);
                 videoView.setVideoURI(videoUri);
                 videoView.start();  // Commencer à jouer la vidéo
+
+                // Enregistrer l'URI de la vidéo dans le bloc
+                bloc.setVideoUrl(videoUri.toString());
+                updateBlocInFirestore(); // Mettre à jour Firestore immédiatement
             }
         }
     }

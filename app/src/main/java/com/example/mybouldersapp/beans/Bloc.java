@@ -9,20 +9,19 @@ public class Bloc implements Serializable {
     private String cotation;
     private String localisation;
     private String commentaire;
-
     private String videoUrl;
-    private String uid;  // Ajout du champ uid
+    private String uid;
 
     // Constructeur
-    public Bloc(String id, String nom, String photoUrl, String cotation, String localisation, String commentaire, String uid) {
+    public Bloc(String id, String nom, String photoUrl, String cotation, String localisation, String commentaire, String videoUrl, String uid) {
         this.id = id;
         this.nom = nom;
         this.photoUrl = photoUrl;
         this.cotation = cotation;
         this.localisation = localisation;
         this.commentaire = commentaire;
-        //this.videoUrl = video;
-        this.uid = uid;  // Initialisation du champ uid
+        this.videoUrl = videoUrl;
+        this.uid = uid;
     }
 
     // Constructeur sans arguments
@@ -55,8 +54,12 @@ public class Bloc implements Serializable {
         return commentaire;
     }
 
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
     public String getUid() {
-        return uid;  // Getter pour le champ uid
+        return uid;
     }
 
     // Setters
@@ -76,7 +79,11 @@ public class Bloc implements Serializable {
         this.commentaire = commentaire;
     }
 
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
+
     public void setUid(String uid) {
-        this.uid = uid;  // Setter pour le champ uid
+        this.uid = uid;
     }
 }
